@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <figure class="text-center">
+        <blockquote class="blockquote">
+        <p class="h2">Добро пожаловать в ToDo-app✌️</p>
+        <p>Вход</p>
+        </blockquote>
+    </figure>
+    <br>
+    <div class="container">
+        <div class="row">
+        <form class="col-lg-4 col-md-6 col-sm-12" action="/auth/login" method="post">
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Электронная почта</label>
+                <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+                <label for "exampleInputPassword1" class="form-label">Пароль</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Запомнить меня</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Войти</button>
+            <a href="/auth/registration" class="btn btn-secondary">Нет аккаунта?</a>
+        </form>
+        </div>
+    </div>
+  
+{% endblock %}

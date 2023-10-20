@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <figure class="text-center">
+        <blockquote class="blockquote">
+        <p class="h2">ToDo-app✌️</p>
+        <p>Список задач</p>
+        </blockquote>
+    </figure>
+    <div class="container-fluid ">
+        <form class="d-flex col-lg-4 col-md-6 col-sm-12 mx-auto" role="search" action="/todo/{{ user_id }}/find_task" method="post">
+            <input class="form-control me-2 col-lg-1" type="search" placeholder="Поиск..." aria-label="Search" name="task_name">
+            <button class="btn btn-outline-info col-lg-4 me-2" type="submit">Найти задачу</button>
+            <button type="button" class="btn btn-success col-lg-4 me-2" data-bs-target="#exampleModal" data-bs-toggle="modal">Добавить задачу</button>
+        </form>
+        <br>
+        <table class="table w-50 p-3 mx-auto">
+            <thead>
+              <tr>
+                <th scope="col">Название</th>
+                <th scope="col">Активно?</th>
+                <th scope="col">Дата создания</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                    <tr>
+                        <form action="/todo/{{user_id}}/delete_task" method="post">
+                            <td>
+                                <div class="mb-3">
+                                    <div class="">
+                                        <input type="text" readonly style="padding: 0;" class="form-control-plaintext" id="staticEmail" value="{{ task.task_name }}" name="task_name">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>{% if task.is_active == True %} Да {% else %} Нет {% endif %}</td>
+                            <td>{{task.creation_date}}</td>
+                            <td><button type="submit" class="btn-close" aria-label="Close" name="delete_task"></button></td>
+                        </form>
+                    </tr>
+                {% endfor %}
+            </tbody>   
+    </div>
+  
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="/todo/{{ user_id }}/add_task" method="post">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Добавление задачи</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Название задачи</span>
+                            <input type="text" name="task_name" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Дата начала задачи</span>
+                            <input type="datetime-local" name="creation_date" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                        <button type="submit" class="btn btn-primary">Добавить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
